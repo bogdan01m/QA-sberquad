@@ -1,9 +1,9 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, render_template
 from model import pipe
 
-app = Flask(__name__)
+flask_app = Flask(__name__, template_folder='templates')
 
-@app.route('/', methods=['GET', 'POST'])
+@flask_app.route('/', methods=['GET', 'POST'])
 def index():
     answer = None
     error = None
@@ -15,10 +15,13 @@ def index():
         if not question or not context:
             error = 'Both question and context are required'
         else:
-            result = pipe(question=question, context=context)
-            answer = result['answer']
+            try:
+                result = pipe(question=question, context=context)
+                answer = result['answer']
+            except Exception as e:
+                error = str(e)
 
     return render_template('index.html', answer=answer, error=error)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    flask_app.run(debug=False)

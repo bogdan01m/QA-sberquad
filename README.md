@@ -6,6 +6,7 @@ QA bert for sberquad (T-b, sirius)
 Вы можете получить Docker-образ приложения, выполнив следующую команду:
 ```bash
 docker pull bogdan01m/flask-qa
+```
 
 Затем вы можете запустить контейнер с этим образом:
 
